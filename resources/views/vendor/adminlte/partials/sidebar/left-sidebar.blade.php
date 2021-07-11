@@ -1,12 +1,7 @@
 <aside class="main-sidebar {{ config('adminlte.classes_sidebar', 'sidebar-dark-primary elevation-4') }}">
-
-    {{-- Sidebar brand logo --}}
-    @if(config('adminlte.logo_img_xl'))
-        @include('adminlte::partials.common.brand-logo-xl')
-    @else
-        @include('adminlte::partials.common.brand-logo-xs')
-    @endif
-
+    <div class="pt-3 pl-3">
+        <h4 class="text-white">Timesheets</h4>
+    </div>
     {{-- Sidebar menu --}}
     <div class="sidebar">
         <nav class="pt-2">
