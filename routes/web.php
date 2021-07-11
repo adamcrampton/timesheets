@@ -8,3 +8,7 @@ Auth::routes();
 Route::group(['as' => 'dashboard.', 'middleware' => ['auth']], function () {
     Route::get('/', 'App\Http\Controllers\Dashboard\DashboardController@index')->name('index');
 });
+
+Route::group(['as' => 'entries.', 'prefix' => 'entries', 'middlware' => ['auth']], function () {
+    Route::get('/current', 'App\Http\Controllers\Entries\Ajax\EntryController@current')->name('current');
+});
