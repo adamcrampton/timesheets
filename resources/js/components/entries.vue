@@ -1,5 +1,29 @@
 <template>
-    
+    <div>
+        <div class="alert alert-warning text-center" v-show="entries.length === 0">No entries found</div>
+        <table class="table table-striped table-bordered table-hover" v-show="entries.length > 0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr 
+                    v-for="entry in entries" 
+                    :key="entry.id" 
+                    :value="entry.id"
+                >
+                    <td>{{ entry.id }}</td>
+                    <td>{{ entry.type.name }}</td>
+                    <td>{{ entry.start_time }}</td>
+                    <td>{{ entry.start_date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -8,7 +32,7 @@ import Axios from 'axios';
 export default {
     data() {
         return {
-            entries: null
+            entries: []
         }
     },
     mounted() {

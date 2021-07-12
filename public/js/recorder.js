@@ -1851,11 +1851,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      entries: null
+      entries: []
     };
   },
   mounted: function mounted() {
@@ -2265,9 +2289,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.entries.length === 0,
+            expression: "entries.length === 0"
+          }
+        ],
+        staticClass: "alert alert-warning text-center"
+      },
+      [_vm._v("No entries found")]
+    ),
+    _vm._v(" "),
+    _c(
+      "table",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.entries.length > 0,
+            expression: "entries.length > 0"
+          }
+        ],
+        staticClass: "table table-striped table-bordered table-hover"
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.entries, function(entry) {
+            return _c("tr", { key: entry.id, attrs: { value: entry.id } }, [
+              _c("td", [_vm._v(_vm._s(entry.id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(entry.type.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(entry.start_time))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(entry.start_date))])
+            ])
+          }),
+          0
+        )
+      ]
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Start Time")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("End Time")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -14621,7 +14712,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 vue__WEBPACK_IMPORTED_MODULE_0__.default.component('recorder', __webpack_require__(/*! ./components/recorder.vue */ "./resources/js/components/recorder.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_0__.default.component('recorder', __webpack_require__(/*! ./components/entries.vue */ "./resources/js/components/entries.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0__.default.component('entries', __webpack_require__(/*! ./components/entries.vue */ "./resources/js/components/entries.vue").default);
 new vue__WEBPACK_IMPORTED_MODULE_0__.default({
   el: '#recorder-wrapper'
 });

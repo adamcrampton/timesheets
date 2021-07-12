@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
+<div id="recorder-wrapper" class="row">
     <div class="col-xl-6 pt-3">
         <div class="card card-navy">
             <div class="card-header">
@@ -9,9 +9,7 @@
             </div>
             <div class="card-body">
                 <p>Select an action:</p>
-                <div id="recorder-wrapper">
-                    <recorder></recorder>
-                </div>
+                <recorder></recorder>
             </div>
         </div>
     </div>
@@ -21,7 +19,7 @@
                 <h3 class="card-title">Entries</h3>
             </div>
             <div class="card-body">
-                
+                <entries></entries>
             </div>
         </div>
     </div>
