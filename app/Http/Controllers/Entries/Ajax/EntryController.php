@@ -60,4 +60,17 @@ class EntryController extends Controller
 
         return response()->json();
     }
+
+    /**
+     * Update existing entry,
+     *
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(Request $request, $id): JsonResponse
+    {
+
+        return response()->json();
+    }
 }

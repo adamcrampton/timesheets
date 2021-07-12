@@ -1,16 +1,10 @@
 <template>
     <div class="row">
         <div class="col">
-            <button class="btn btn-block btn-primary">Start Work Timer</button>
+            <button class="btn btn-block btn-primary">{{ workTimer ? 'Stop' : 'Start' }} Work Timer</button>
         </div>
         <div class="col">
-            <input class="form-control" type="number" v-model="workTimer">
-        </div>
-        <div class="col">
-            <button class="btn btn-block btn-warning">Start Break Timer</button>
-        </div>
-        <div class="col">
-            <input class="form-control" type="number" v-model="breakTimer">
+            <button class="btn btn-block btn-warning">{{ breakTimer ? 'Stop' : 'Start' }} Break Timer</button>
         </div>
     </div>
 </template>
@@ -20,8 +14,21 @@
 export default {
     data() {
         return {
-            workTimer: 0,
-            breakTimer: 0
+            currentEntry: null,
+            currentWorkStart: null,
+            currentBreakStart: null,
+            workTimer: false,
+            breakTimer: false
+        }
+    },
+    methods: {
+        // Request backend to insert start entry and return.
+        start(type) {
+
+        },
+        // Request backend to update entry with end time.
+        stop() {
+
         }
     }
 }

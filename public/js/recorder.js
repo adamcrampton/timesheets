@@ -1918,18 +1918,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      workTimer: 0,
-      breakTimer: 0
+      currentEntry: null,
+      currentWorkStart: null,
+      currentBreakStart: null,
+      workTimer: false,
+      breakTimer: false
     };
+  },
+  methods: {
+    // Request backend to insert start entry and return.
+    start: function start(type) {},
+    // Request backend to update entry with end time.
+    stop: function stop() {}
   }
 });
 
@@ -2382,81 +2385,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _vm._m(0),
-    _vm._v(" "),
     _c("div", { staticClass: "col" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.workTimer,
-            expression: "workTimer"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "number" },
-        domProps: { value: _vm.workTimer },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.workTimer = $event.target.value
-          }
-        }
-      })
+      _c("button", { staticClass: "btn btn-block btn-primary" }, [
+        _vm._v(_vm._s(_vm.workTimer ? "Stop" : "Start") + " Work Timer")
+      ])
     ]),
     _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
     _c("div", { staticClass: "col" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.breakTimer,
-            expression: "breakTimer"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "number" },
-        domProps: { value: _vm.breakTimer },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.breakTimer = $event.target.value
-          }
-        }
-      })
+      _c("button", { staticClass: "btn btn-block btn-warning" }, [
+        _vm._v(_vm._s(_vm.breakTimer ? "Stop" : "Start") + " Break Timer")
+      ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("button", { staticClass: "btn btn-block btn-primary" }, [
-        _vm._v("Start Work Timer")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("button", { staticClass: "btn btn-block btn-warning" }, [
-        _vm._v("Start Break Timer")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
