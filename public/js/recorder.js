@@ -1921,6 +1921,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      entries: [],
       currentEntry: null,
       currentWorkStart: null,
       currentBreakStart: null,
@@ -1930,9 +1931,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     // Request backend to insert start entry and return.
-    start: function start(type) {},
+    start: function start(type) {
+      this.workTimer = type === 'work';
+      this.breakTimer = type === 'break';
+    },
     // Request backend to update entry with end time.
-    stop: function stop() {}
+    stop: function stop(type) {
+      this.workTimer = type === 'break';
+      this.breakTimer = type === 'work';
+    }
   }
 });
 
@@ -2386,15 +2393,33 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col" }, [
-      _c("button", { staticClass: "btn btn-block btn-primary" }, [
-        _vm._v(_vm._s(_vm.workTimer ? "Stop" : "Start") + " Work Timer")
-      ])
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-block btn-primary",
+          on: {
+            click: function($event) {
+              _vm.workTimer ? _vm.stop("work") : _vm.start("work")
+            }
+          }
+        },
+        [_vm._v(_vm._s(_vm.workTimer ? "Stop" : "Start") + " Work Timer")]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col" }, [
-      _c("button", { staticClass: "btn btn-block btn-warning" }, [
-        _vm._v(_vm._s(_vm.breakTimer ? "Stop" : "Start") + " Break Timer")
-      ])
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-block btn-warning",
+          on: {
+            click: function($event) {
+              _vm.breakTimer ? _vm.stop("break") : _vm.start("break")
+            }
+          }
+        },
+        [_vm._v(_vm._s(_vm.breakTimer ? "Stop" : "Start") + " Break Timer")]
+      )
     ])
   ])
 }
