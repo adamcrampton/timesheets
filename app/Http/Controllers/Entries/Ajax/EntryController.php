@@ -9,14 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Entries\Entry;
+use App\Models\Entries\EntryType;
 
 class EntryController extends Controller
 {
     public $entry;
+    public $type;
 
-    public function __construct(Entry $entry)
+    public function __construct(Entry $entry, EntryType $type)
     {
         $this->entry = $entry;
+        $this->type = $type;
     }
 
     /**
@@ -38,6 +41,7 @@ class EntryController extends Controller
         return response()->json(
             $this->entry->where('user_id', $user->id)
                         ->whereDate('created_at', '>=', $current . ' 00:00:00')
+                        ->with(['type'])
                         ->get()
         , 200);
     }
@@ -56,9 +60,28 @@ class EntryController extends Controller
             return response()->json(
                 'Could not retrieve auth user - check user is logged in'
             , 422);
+        elseif (is_null($request->type)):
+            return response()->json(
+                'type parameter missing or null'
+            , 400);
+        elseif (!in_array($request->type, ['work', 'break'])):
+            return response()->json(
+                'type parameter must be work or break'
+            , 400);
         endif;
 
-        return response()->json();
+        $entry = $this->entry->create([
+                    'user_id' => $user->id,
+                    'entry_type_id' => $this->type->where('name', $request->type)->first()->id, 
+                    'start_time' => Carbon::now(), 
+                    'end_time' => null
+                ]);
+
+        return response()->json(
+            $this->entry->where('id', $entry->id)
+                        ->with(['type'])
+                        ->first()
+        , 201);
     }
 
     /**
@@ -74,3 +97,4 @@ class EntryController extends Controller
         return response()->json();
     }
 }
+ 

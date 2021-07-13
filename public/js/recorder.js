@@ -1847,6 +1847,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _event_bus_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../event-bus.js */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -1875,6 +1876,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -1890,7 +1892,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.entries = response.data;
     })["catch"](function (error) {
       console.log(error);
-    })["finally"](function () {});
+    })["finally"](function () {}); // Push new entry into array.
+
+    _event_bus_js__WEBPACK_IMPORTED_MODULE_1__.default.$on('addEntry', function (entry) {
+      _this.entries.push(entry);
+    });
   }
 });
 
@@ -1907,6 +1913,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _event_bus_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../event-bus.js */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -1918,6 +1927,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -1930,18 +1941,56 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // Save new row + set current entry ID.
+    save: function save(type) {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/entries/store', {
+        type: type
+      }).then(function (response) {
+        // Save new entry + push into entries lists.
+        _this.currentEntry = response.data.id;
+
+        _this.entries.push(response.data);
+
+        _event_bus_js__WEBPACK_IMPORTED_MODULE_1__.default.$emit('addEntry', response.data);
+      })["catch"](function (error) {})["finally"](function () {});
+    },
     // Request backend to insert start entry and return.
     start: function start(type) {
+      // Set properties.
       this.workTimer = type === 'work';
-      this.breakTimer = type === 'break';
+      this.breakTimer = type === 'break'; // Save new entry.
+
+      this.save(type);
     },
     // Request backend to update entry with end time.
     stop: function stop(type) {
       this.workTimer = type === 'break';
       this.breakTimer = type === 'work';
-    }
+    },
+    // Update current row.
+    update: function update() {}
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/event-bus.js":
+/*!***********************************!*\
+  !*** ./resources/js/event-bus.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0__.default();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EventBus);
 
 /***/ }),
 

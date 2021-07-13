@@ -28,6 +28,7 @@
 
 <script>
 import Axios from 'axios';
+import EventBus from '../event-bus.js';
 
 export default {
     data() {
@@ -47,6 +48,11 @@ export default {
             .finally(() => {
 
             });
+        
+        // Push new entry into array.
+        EventBus.$on('addEntry', (entry) => {
+            this.entries.push(entry);
+        });
     }
 }
 </script>

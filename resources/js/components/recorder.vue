@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import Axios from 'axios';
+import EventBus from '../event-bus.js';
 
 export default {
     data() {
@@ -23,15 +25,41 @@ export default {
         }
     },
     methods: {
+        // Save new row + set current entry ID.
+        save(type) {
+            Axios.post('/entries/store', {
+                type: type
+            })
+            .then((response) => {
+                // Save new entry + push into entries lists.
+                this.currentEntry = response.data.id;
+                this.entries.push(response.data);
+                EventBus.$emit('addEntry', response.data);
+            })
+            .catch((error) => {
+
+            })
+            .finally(() => {
+
+            });
+        },
         // Request backend to insert start entry and return.
         start(type) {
+            // Set properties.
             this.workTimer = type === 'work';
             this.breakTimer = type === 'break';
+
+            // Save new entry.
+            this.save(type);
         },
         // Request backend to update entry with end time.
         stop(type) {
             this.workTimer = type === 'break';
             this.breakTimer = type === 'work';
+        },
+        // Update current row.
+        update() {
+
         }
     }
 }
