@@ -19,7 +19,7 @@
                     <td>{{ entry.id }}</td>
                     <td>{{ entry.type.name }}</td>
                     <td>{{ entry.start_time }}</td>
-                    <td>{{ entry.start_date }}</td>
+                    <td>{{ entry.end_time }}</td>
                 </tr>
             </tbody>
         </table>
@@ -45,9 +45,7 @@ export default {
             .catch((error) => {
                 console.log(error)
             })
-            .finally(() => {
-
-            });
+            .finally(() => {});
         
         // Push new entry into array.
         EventBus.$on('addEntry', (entry) => {

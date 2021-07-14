@@ -1965,15 +1965,30 @@ __webpack_require__.r(__webpack_exports__);
       this.save(type);
     },
     // Request backend to update entry with end time.
-    stop: function stop(type) {
+    stop: function stop() {
       if (this.workTimer) {
         this.workTimer = false;
       } else {
         this.breakTimer = false;
       }
+
+      this.update();
     },
     // Update current row.
-    update: function update() {}
+    update: function update() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().put('/entries/' + this.currentEntry + '/update').then(function (response) {
+        // Update end time in table.
+        _event_bus_js__WEBPACK_IMPORTED_MODULE_1__.default.$emit('stopEntry', {
+          id: _this2.currentEntry,
+          end: response.data.end,
+          duration: response.data.duration
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {});
+    }
   }
 });
 
@@ -2394,7 +2409,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(entry.start_time))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(entry.start_date))])
+              _c("td", [_vm._v(_vm._s(entry.end_time))])
             ])
           }),
           0

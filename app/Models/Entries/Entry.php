@@ -11,7 +11,7 @@ class Entry extends Model
 
     protected $table = 'entries';
     protected $fillable = [
-        'user_id', 'entry_type_id', 'start_time', 'end_time'
+        'user_id', 'entry_type_id', 'start_time', 'end_time', 'duration'
     ];
 
     public function type()

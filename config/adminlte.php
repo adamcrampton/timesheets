@@ -243,7 +243,11 @@ return [
             'url'         => '/',
             'icon'        => 'text-danger mr-2 fas fa-circle',
         ],
-        
+        [
+            'text'        => 'My Timesheets',
+            'url'         => '/',
+            'icon'        => 'mr-2 fas fa-user-clock',
+        ],
     ],
 
     /*

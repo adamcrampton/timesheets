@@ -12,5 +12,5 @@ Route::group(['as' => 'dashboard.', 'middleware' => ['auth']], function () {
 Route::group(['as' => 'entries.', 'prefix' => 'entries', 'middlware' => ['auth']], function () {
     Route::get('/current', 'App\Http\Controllers\Entries\Ajax\EntryController@current')->name('current');
     Route::post('/store', 'App\Http\Controllers\Entries\Ajax\EntryController@store')->name('store');
-    Route::put('/update', 'App\Http\Controllers\Entries\Ajax\EntryController@update')->name('update');
+    Route::put('/{id}/update', 'App\Http\Controllers\Entries\Ajax\EntryController@update')->name('update');
 });

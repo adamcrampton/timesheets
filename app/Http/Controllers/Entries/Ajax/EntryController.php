@@ -91,10 +91,28 @@ class EntryController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function update(Request $request, $id): JsonResponse
+    public function update($id): JsonResponse
     {
+        $entry = $this->entry->find($id);
 
-        return response()->json();
+        if (is_null($entry)):
+            return response()->json(
+                'Could not retrieve auth user - check user is logged in'
+            , 422);
+        endif;
+
+        $now = Carbon::now();
+        $duration = Carbon::parse($now)->diffInMinutes($entry->start_time);
+        $entry->update([
+            'end_time' => $now,
+            'duration' => $duration
+        ]);
+
+        return response()->json([
+            'start' => $entry->start_time,
+            'end' => $now->format('Y-m-d h:i:s'),
+            'duration' => $duration
+        ], 200);
     }
 }
  

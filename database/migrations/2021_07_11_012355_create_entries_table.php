@@ -19,6 +19,7 @@ class CreateEntriesTable extends Migration
             $table->unsignedBigInteger('entry_type_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
+            $table->unsignedInteger('duration')->nullable();
             $table->timestamps();
         });
     }

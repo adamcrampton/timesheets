@@ -37,9 +37,7 @@ export default {
             .catch((error) => {
                 console.log(error);
             })
-            .finally(() => {
-
-            });
+            .finally(() => {});
         },
         // Request backend to insert start entry and return.
         start(type) {
@@ -51,16 +49,30 @@ export default {
             this.save(type);
         },
         // Request backend to update entry with end time.
-        stop(type) {
+        stop() {
             if (this.workTimer) {
                 this.workTimer = false;
             } else {
                 this.breakTimer = false;
             }
+
+            this.update();
         },
         // Update current row.
         update() {
-
+            Axios.put('/entries/' + this.currentEntry + '/update')
+            .then((response) => {
+                // Update end time in table.
+                EventBus.$emit('stopEntry', {
+                    id: this.currentEntry, 
+                    end: response.data.end, 
+                    duration: response.data.duration
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {});
         }
     }
 }
