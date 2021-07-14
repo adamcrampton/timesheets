@@ -18,8 +18,6 @@ export default {
         return {
             entries: [],
             currentEntry: null,
-            currentWorkStart: null,
-            currentBreakStart: null,
             workTimer: false,
             breakTimer: false
         }
@@ -37,7 +35,7 @@ export default {
                 EventBus.$emit('addEntry', response.data);
             })
             .catch((error) => {
-
+                console.log(error);
             })
             .finally(() => {
 
@@ -54,8 +52,11 @@ export default {
         },
         // Request backend to update entry with end time.
         stop(type) {
-            this.workTimer = type === 'break';
-            this.breakTimer = type === 'work';
+            if (this.workTimer) {
+                this.workTimer = false;
+            } else {
+                this.breakTimer = false;
+            }
         },
         // Update current row.
         update() {

@@ -1934,8 +1934,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       entries: [],
       currentEntry: null,
-      currentWorkStart: null,
-      currentBreakStart: null,
       workTimer: false,
       breakTimer: false
     };
@@ -1954,7 +1952,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.entries.push(response.data);
 
         _event_bus_js__WEBPACK_IMPORTED_MODULE_1__.default.$emit('addEntry', response.data);
-      })["catch"](function (error) {})["finally"](function () {});
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {});
     },
     // Request backend to insert start entry and return.
     start: function start(type) {
@@ -1966,8 +1966,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Request backend to update entry with end time.
     stop: function stop(type) {
-      this.workTimer = type === 'break';
-      this.breakTimer = type === 'work';
+      if (this.workTimer) {
+        this.workTimer = false;
+      } else {
+        this.breakTimer = false;
+      }
     },
     // Update current row.
     update: function update() {}
